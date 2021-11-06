@@ -27,6 +27,9 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { SecretTableComponent } from './secret-table/secret-table.component';
+import { AddPasswordComponent } from './add-password/add-password.component';
+import { AddKeyComponent } from './add-key/add-key.component';
 
 @NgModule({
   imports: [
@@ -58,7 +61,17 @@ import { ErrorComponent } from './layouts/error/error.component';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [
+    MainComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    SecretTableComponent,
+    AddPasswordComponent,
+    AddKeyComponent,
+  ],
   bootstrap: [MainComponent],
 })
 export class AppModule {
