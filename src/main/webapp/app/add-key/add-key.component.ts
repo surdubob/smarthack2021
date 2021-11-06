@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersPasswordsService } from '../entities/users-passwords/service/users-passwords.service';
+import { UsersPasswords } from '../entities/users-passwords/users-passwords.model';
+import { AccountService } from '../core/auth/account.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-add-key',
@@ -6,7 +10,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-key.component.scss'],
 })
 export class AddKeyComponent {
-  constructor() {
+  keyValue = '';
+  inputGroup = '';
+  platform = '';
+  constructor(private userPasswordsService: UsersPasswordsService, private accountService: AccountService, private http: HttpClient) {
     // empty
   }
+
+  save_key(): void {
+    const password = new UsersPasswords();
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        password.user = account;
+        password.type = this.inputGroup;
+        password.platform = this.platform;
+        password.secret = this.keyValue;
+        // eslint-disable-next-line no-console
+        this.userPasswordsService.create(password).subscribe(response => console.log(response));
+      }
+    });
+  }
+
+  /*generate_key(): void {
+
+  }*/
 }
