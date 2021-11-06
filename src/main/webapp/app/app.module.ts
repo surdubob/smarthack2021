@@ -30,10 +30,12 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { SecretTableComponent } from './secret-table/secret-table.component';
 import { AddPasswordComponent } from './add-password/add-password.component';
 import { AddKeyComponent } from './add-key/add-key.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
     SharedModule,
     HomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
