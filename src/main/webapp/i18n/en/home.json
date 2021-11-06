@@ -1,10 +1,14 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
+    "title": "Welcome to our crypto keys storage site!",
     "subtitle": "This is your homepage",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
+    "signin": "Start now to manage your passwords",
+    "register": "You don't have an account yet?",
+    "btn_signin": "Sign In",
+    "btn_register": "Register Now",
     "question": "If you have any question on JHipster:",
     "link": {
       "homepage": "JHipster homepage",
@@ -13,7 +17,7 @@
       "chat": "JHipster public chat room",
       "follow": "follow @jhipster on Twitter"
     },
-    "like": "If you like JHipster, don't forget to give us a star on",
+    "like": "If you like our app, don't forget to give us a star on",
     "github": "GitHub"
   }
 }

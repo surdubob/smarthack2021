@@ -1,11 +1,15 @@
 {
   "home": {
-    "title": "Bun venit, Java Hipster!",
+    "title": "Bun venit pe site-ul nostru de stocare a cheilor cripto!",
     "subtitle": "Aceasta este pagina ta de start",
     "logged": {
       "message": "Ești autentificat cu numele de utilizator \"{{username}}\"."
     },
     "question": "Dacă ai orice întrebări în legatură cu JHipster:",
+    "signin": "Începeți acum să vă gestionați parolele",
+    "register": "Încă nu aveți un cont?",
+    "btn_signin": "Conectare",
+    "btn_register": "Înregistrează-te acum",
     "link": {
       "homepage": "Pagina JHipster",
       "stackoverflow": "JHipster pe Stack Overflow",

@@ -4,9 +4,9 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4"><span jhiTranslate="home.title">Welcome, Java Hipster!</span> (Smarthack 2021)</h1>
+    <h1 class="display-4"><span jhiTranslate="home.title">Welcome to our crypto keys storage site!</span> (Smarthack 2021)</h1>
 
-    <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
+    <p style="margin-top: 100px"></p>
 
     <div [ngSwitch]="account !== null">
       <div class="alert alert-success" *ngSwitchCase="true">
@@ -15,64 +15,28 @@
         >
       </div>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-        <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a
-        ><span jhiTranslate="global.messages.info.authenticated.suffix"
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
-        >
+      <div>
+        <span jhiTranslate="home.signin" class="txt_font">Start now to manage your passwords</span>
+        <button class="btn btn-primary btn_style" id="btn_signin" (click)="login()" jhiTranslate="home.btn_signin">Sign In</button>
       </div>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+      <div style="margin-top: 8px">
+        <span jhiTranslate="home.register" class="txt_font"> You don't have an account yet? </span>
+        <button
+          class="btn btn-primary btn_style"
+          id="btn_registernow"
+          routerLink="account/register"
+          routerLinkActive="active"
+          jhiTranslate="home.btn_register"
+        >
+          Register Now
+        </button>
       </div>
     </div>
 
-    <p jhiTranslate="home.question">If you have any question on JHipster:</p>
-
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
-          >JHipster homepage</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.stackoverflow"
-          >JHipster on Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.bugtracker"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat"
-          >JHipster public chat room</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow"
-          >follow @jhipster on Twitter</a
-        >
-      </li>
-    </ul>
-
-    <p>
+    <p style="margin-top: 100px">
       <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github"
-        >GitHub</a
-      >!
+      <a href="https://github.com/surdubob/smarthack2021" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github">GitHub</a>!
     </p>
   </div>
 </div>
