@@ -35,9 +35,66 @@
   </div>
   <div class="col-md-9" *ngIf="account">
     <p class="display-4" jhiTranslate="home.title2">"Your passwords and keys are:"</p>
-    <button class="btn btn-primary btn_style" jhiTranslate="home.btn_password">"Add a password"</button>
-    <button class="btn btn-primary btn_style" jhiTranslate="home.btn_key">"Add a key"</button>
-    <p style="margin-top: 20px">Passwords:</p>
-    <p>Keys:</p>
+    <div class="form-inline" style="width: 100%">
+      <button class="btn btn-primary btn_style" jhiTranslate="home.btn_password">"Add a password"</button>
+      <button class="btn btn-primary btn_style m-3" jhiTranslate="home.btn_key">"Add a key"</button>
+      <input
+        id="search input"
+        type="text"
+        class="search form-control ml-auto"
+        style="margin-right: 0"
+        jhiTranslate="home.search"
+        placeholder="Search?"
+      />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover" style="margin-top: 50px" id="tabel">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"><span jhiTranslate="smarthack2021App.usersPasswords.secret">Secret</span></th>
+            <th scope="col"><span jhiTranslate="smarthack2021App.usersPasswords.type">Type</span></th>
+            <th scope="col"><span jhiTranslate="smarthack2021App.usersPasswords.platform">Platform</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usersPasswords of passwordList">
+            <td>{{ usersPasswords.secret }}</td>
+            <td>{{ usersPasswords.type }}</td>
+            <td>{{ usersPasswords.platform }}</td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/users-passwords', usersPasswords.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/users-passwords', usersPasswords.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+
+                <button type="submit" (click)="delete(usersPasswords)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
