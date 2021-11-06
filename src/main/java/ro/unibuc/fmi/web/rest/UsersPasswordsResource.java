@@ -9,11 +9,16 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import ro.unibuc.fmi.domain.User;
 import ro.unibuc.fmi.domain.UsersPasswords;
+import ro.unibuc.fmi.encryptors.EncryptionTool;
+import ro.unibuc.fmi.encryptors.SmarthackKeyGenerator;
 import ro.unibuc.fmi.repository.UsersPasswordsRepository;
+import ro.unibuc.fmi.service.UserService;
 import ro.unibuc.fmi.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -33,10 +38,13 @@ public class UsersPasswordsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final UserService userService;
+
     private final UsersPasswordsRepository usersPasswordsRepository;
 
-    public UsersPasswordsResource(UsersPasswordsRepository usersPasswordsRepository) {
+    public UsersPasswordsResource(UsersPasswordsRepository usersPasswordsRepository, UserService userService) {
         this.usersPasswordsRepository = usersPasswordsRepository;
+        this.userService = userService;
     }
 
     /**
@@ -52,11 +60,18 @@ public class UsersPasswordsResource {
         if (usersPasswords.getId() != null) {
             throw new BadRequestAlertException("A new usersPasswords cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        UsersPasswords result = usersPasswordsRepository.save(usersPasswords);
-        return ResponseEntity
-            .created(new URI("/api/users-passwords/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        try {
+            EncryptionTool enc = new EncryptionTool();
+            usersPasswords.secret(enc.encrypt(usersPasswords.getSecret()));
+            UsersPasswords result = usersPasswordsRepository.save(usersPasswords);
+            return ResponseEntity
+                .created(new URI("/api/users-passwords/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
 
     /**
@@ -149,11 +164,11 @@ public class UsersPasswordsResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of usersPasswords in body.
      */
-    @GetMapping("/users-passwords")
-    public List<UsersPasswords> getAllUsersPasswords() {
-        log.debug("REST request to get all UsersPasswords");
-        return usersPasswordsRepository.findAll();
-    }
+    //    @GetMapping("/users-passwords")
+    //    public List<UsersPasswords> getAllUsersPasswords() {
+    //        log.debug("REST request to get all UsersPasswords");
+    //        return usersPasswordsRepository.findAll();
+    //    }
 
     /**
      * {@code GET  /users-passwords/:id} : get the "id" usersPasswords.
@@ -165,7 +180,18 @@ public class UsersPasswordsResource {
     public ResponseEntity<UsersPasswords> getUsersPasswords(@PathVariable UUID id) {
         log.debug("REST request to get UsersPasswords : {}", id);
         Optional<UsersPasswords> usersPasswords = usersPasswordsRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(usersPasswords);
+
+        final Optional<User> isUser = userService.getUserWithAuthorities();
+        if (isUser.isEmpty()) {
+            log.error("User is not logged in");
+            return new ResponseEntity<UsersPasswords>(HttpStatus.FORBIDDEN);
+        }
+        final User user = isUser.get();
+        if (usersPasswordsRepository.passwordBelongsToUser(user.getId(), id) == 1) {
+            return ResponseUtil.wrapOrNotFound(usersPasswords);
+        }
+
+        return new ResponseEntity<UsersPasswords>(HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -177,10 +203,65 @@ public class UsersPasswordsResource {
     @DeleteMapping("/users-passwords/{id}")
     public ResponseEntity<Void> deleteUsersPasswords(@PathVariable UUID id) {
         log.debug("REST request to delete UsersPasswords : {}", id);
-        usersPasswordsRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+
+        final Optional<User> isUser = userService.getUserWithAuthorities();
+        if (isUser.isEmpty()) {
+            log.error("User is not logged in");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        final User user = isUser.get();
+        if (usersPasswordsRepository.passwordBelongsToUser(user.getId(), id) == 1) {
+            usersPasswordsRepository.deleteById(id);
+            return ResponseEntity
+                .noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+                .build();
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping("/users-passwords/generate-key/{type}")
+    public ResponseEntity<String> generateKey(@PathVariable String type) {
+        String response = "";
+        SmarthackKeyGenerator shkg = new SmarthackKeyGenerator();
+        switch (type) {
+            case "AES 128":
+                {
+                    response = shkg.generate_aes(128);
+                    break;
+                }
+            case "AES 192":
+                {
+                    response = shkg.generate_aes(192);
+                    break;
+                }
+            case "AES 256":
+                {
+                    response = shkg.generate_aes(256);
+                    break;
+                }
+            case "Triple DES":
+                {
+                    response = shkg.generate_3des();
+                    break;
+                }
+            case "RSA 1024":
+                {
+                    response = shkg.generate_rsa(1024);
+                    break;
+                }
+            case "RSA 2048":
+                {
+                    response = shkg.generate_rsa(2048);
+                    break;
+                }
+            case "ECC":
+                {
+                    response = shkg.generate_ecc();
+                    break;
+                }
+        }
+        return ResponseEntity.ok(response);
     }
 }

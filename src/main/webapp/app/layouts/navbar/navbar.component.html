@@ -27,36 +27,36 @@
         </a>
       </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-      <li
-        *ngSwitchCase="true"
-        ngbDropdown
-        class="nav-item dropdown pointer"
-        display="dynamic"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-          <span>
-            <fa-icon icon="th-list"></fa-icon>
-            <span jhiTranslate="global.menu.entities.main">Entities</span>
-          </span>
-        </a>
-        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-          <li>
-            <a
-              class="dropdown-item"
-              routerLink="users-passwords"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-              <span jhiTranslate="global.menu.entities.usersPasswords">Users Passwords</span>
-            </a>
-          </li>
-          <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-        </ul>
-      </li>
+      <!--      <li-->
+      <!--        *ngSwitchCase="true"-->
+      <!--        ngbDropdown-->
+      <!--        class="nav-item dropdown pointer"-->
+      <!--        display="dynamic"-->
+      <!--        routerLinkActive="active"-->
+      <!--        [routerLinkActiveOptions]="{ exact: true }"-->
+      <!--      >-->
+      <!--        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">-->
+      <!--          <span>-->
+      <!--            <fa-icon icon="th-list"></fa-icon>-->
+      <!--            <span jhiTranslate="global.menu.entities.main">Entities</span>-->
+      <!--          </span>-->
+      <!--        </a>-->
+      <!--        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">-->
+      <!--          <li>-->
+      <!--            <a-->
+      <!--              class="dropdown-item"-->
+      <!--              routerLink="users-passwords"-->
+      <!--              routerLinkActive="active"-->
+      <!--              [routerLinkActiveOptions]="{ exact: true }"-->
+      <!--              (click)="collapseNavbar()"-->
+      <!--            >-->
+      <!--              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>-->
+      <!--              <span jhiTranslate="global.menu.entities.usersPasswords">Users Passwords</span>-->
+      <!--            </a>-->
+      <!--          </li>-->
+      <!--          &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;-->
+      <!--        </ul>-->
+      <!--      </li>-->
       <li
         *jhiHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
