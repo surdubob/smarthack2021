@@ -1,10 +1,10 @@
+<h2 class="card-title">Add or Generate a new Key</h2>
 <div class="card mb-2">
-  <h1 class="card-title">Add New Key</h1>
   <div class="card-body">
     <form>
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Type of Key</label>
-        <select class="browser-default custom-select" id="inputGroupSelect01" name="type-select" [(ngModel)]="inputGroup">
+        <select class="browser-default custom-select" id="inputGroupSelect01" name="type-select" [(ngModel)]="inputGroup" ngModel required>
           <option value="AES_128">AES_128</option>
           <option value="AES_192">AES_192</option>
           <option value="AES_256">AES_256</option>
@@ -26,6 +26,7 @@
               id="platform"
               name="input key"
               [(ngModel)]="platform"
+              required
             />
           </div>
         </div>
@@ -42,6 +43,7 @@
               id="key_value"
               name="key-value"
               [(ngModel)]="keyValue"
+              required
             />
           </div>
           <div class="col">
