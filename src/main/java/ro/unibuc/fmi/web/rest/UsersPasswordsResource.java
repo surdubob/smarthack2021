@@ -168,7 +168,19 @@ public class UsersPasswordsResource {
     @GetMapping("/users-passwords")
     public List<UsersPasswords> getAllUsersPasswords() {
         log.debug("REST request to get all UsersPasswords");
-        return usersPasswordsRepository.findByUserIsCurrentUser();
+        EncryptionTool enc = null;
+        try {
+            enc = new EncryptionTool();
+            EncryptionTool finalEnc = enc;
+            List<UsersPasswords> up = usersPasswordsRepository.findByUserIsCurrentUser();
+            for (UsersPasswords usersPassword : up) {
+                usersPassword.secret(finalEnc.decrypt(usersPassword.getSecret()));
+            }
+            return up;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
