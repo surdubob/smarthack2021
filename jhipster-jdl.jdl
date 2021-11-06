@@ -1,0 +1,12 @@
+
+
+entity UsersPasswords{
+	id UUID
+    secret String
+    type String
+    platform String
+}
+
+relationship ManyToOne {
+    UsersPasswords{user} to User
+}

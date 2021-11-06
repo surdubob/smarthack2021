@@ -33,7 +33,7 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/smarthack2021?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    url: jdbc:mariadb://localhost:3306/smarthack2021?useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password:
     hikari:
@@ -114,7 +114,7 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: ODAyMjkwMzYwZTQ5OGQwZTJmNTg5Zjk0MDQ2NjhhMmYwNjNkNTBiMDZmNTliNzllOTNhOTllNDg4ZTA1M2EwZTE4ODIzNzQ5ZjU5ZWVmZjcwNWZjNjc1ZGI1NGU0YzljNzY1MmU3OWU2OTdiZjlkNTJlYWRiMjhjM2M4NzMyMjU=
+        base64-secret: MDdjNmQwMDU3MDZhODcxNjIxZWY4MWZlOTZiOWU2NGI5NDJmYjlmMDM2NWZjMzgxYzYxNjhkMTkzZTBhYWZkYWFkZGI1ZTllYTQyZmFlNTcyNmVhNzdkMmY2MTNmMDY4MDFhNDkzMzdmMTQ0MWE4NDcxNGU4NzMwNmQ5YzUwZjU=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

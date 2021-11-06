@@ -24,7 +24,7 @@ spring:
   devtools:
     restart:
       enabled: true
-      additional-exclude: static/**,.h2.server.properties
+      additional-exclude: static/**
     livereload:
       enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
@@ -32,18 +32,18 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/smarthack2021;DB_CLOSE_DELAY=-1
-    username: smarthack2021
-    password:
+    url: jdbc:mariadb://192.168.1.198:3306/smarthack2021?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: alex
+    password: alex2000
     hikari:
       poolName: Hikari
       auto-commit: false
-  h2:
-    console:
-      # disable spring boot built-in h2-console since we start it manually with correct configuration
-      enabled: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
   jpa:
-    database-platform: tech.jhipster.domain.util.FixedH2Dialect
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -93,7 +93,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: ODAyMjkwMzYwZTQ5OGQwZTJmNTg5Zjk0MDQ2NjhhMmYwNjNkNTBiMDZmNTliNzllOTNhOTllNDg4ZTA1M2EwZTE4ODIzNzQ5ZjU5ZWVmZjcwNWZjNjc1ZGI1NGU0YzljNzY1MmU3OWU2OTdiZjlkNTJlYWRiMjhjM2M4NzMyMjU=
+        base64-secret: MDdjNmQwMDU3MDZhODcxNjIxZWY4MWZlOTZiOWU2NGI5NDJmYjlmMDM2NWZjMzgxYzYxNjhkMTkzZTBhYWZkYWFkZGI1ZTllYTQyZmFlNTcyNmVhNzdkMmY2MTNmMDY4MDFhNDkzMzdmMTQ0MWE4NDcxNGU4NzMwNmQ5YzUwZjU=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

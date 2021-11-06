@@ -58,7 +58,6 @@
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <liquibase.version>4.5.0</liquibase.version>
         <liquibase-hibernate5.version>4.5.0</liquibase-hibernate5.version>
-        <h2.version>1.4.200</h2.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
         <archunit-junit5.version>0.21.0</archunit-junit5.version>
@@ -162,7 +161,7 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
+            <artifactId>mariadb</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -170,8 +169,8 @@
             <artifactId>cache-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ehcache</groupId>
@@ -643,12 +642,12 @@
                     <configuration>
                         <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                         <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                        <driver>org.h2.Driver</driver>
-                        <url>jdbc:h2:file:${project.build.directory}/h2db/db/smarthack2021</url>
+                        <driver>org.mariadb.jdbc.Driver</driver>
+                        <url>jdbc:mariadb://localhost:3306/smarthack2021</url>
                         <defaultSchemaName></defaultSchemaName>
-                        <username>smarthack2021</username>
+                        <username></username>
                         <password></password>
-                        <referenceUrl>hibernate:spring:ro.unibuc.fmi.domain?dialect=org.hibernate.dialect.H2Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
+                        <referenceUrl>hibernate:spring:ro.unibuc.fmi.domain?dialect=org.hibernate.dialect.MariaDB103Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
                         <contexts>!test</contexts>
@@ -678,11 +677,6 @@
                             <groupId>org.javassist</groupId>
                             <artifactId>javassist</artifactId>
                             <version>${javassist.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.h2database</groupId>
-                            <artifactId>h2</artifactId>
-                            <version>${h2.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -883,10 +877,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -1025,10 +1015,6 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-devtools</artifactId>
                     <optional>true</optional>
-                </dependency>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
                 </dependency>
             </dependencies>
             <properties>

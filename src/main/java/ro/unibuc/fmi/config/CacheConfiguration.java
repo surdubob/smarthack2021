@@ -48,6 +48,7 @@ public class CacheConfiguration {
             createCache(cm, ro.unibuc.fmi.domain.User.class.getName());
             createCache(cm, ro.unibuc.fmi.domain.Authority.class.getName());
             createCache(cm, ro.unibuc.fmi.domain.User.class.getName() + ".authorities");
+            createCache(cm, ro.unibuc.fmi.domain.UsersPasswords.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

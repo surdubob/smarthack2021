@@ -15,7 +15,7 @@
     "blueprints": [],
     "otherModules": [],
     "pages": [],
-    "creationTimestamp": 1636189970020,
+    "creationTimestamp": 1636212648689,
     "serviceDiscoveryType": "no",
     "reactive": false,
     "authenticationType": "jwt",
@@ -24,8 +24,8 @@
     "cacheProvider": "ehcache",
     "enableHibernateCache": true,
     "databaseType": "sql",
-    "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "mysql",
+    "devDatabaseType": "mariadb",
+    "prodDatabaseType": "mariadb",
     "buildTool": "maven",
     "serverSideOptions": [],
     "websocket": false,
@@ -37,11 +37,13 @@
     "clientTheme": "none",
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "jwtSecretKey": "ODAyMjkwMzYwZTQ5OGQwZTJmNTg5Zjk0MDQ2NjhhMmYwNjNkNTBiMDZmNTliNzllOTNhOTllNDg4ZTA1M2EwZTE4ODIzNzQ5ZjU5ZWVmZjcwNWZjNjc1ZGI1NGU0YzljNzY1MmU3OWU2OTdiZjlkNTJlYWRiMjhjM2M4NzMyMjU=",
+    "jwtSecretKey": "MDdjNmQwMDU3MDZhODcxNjIxZWY4MWZlOTZiOWU2NGI5NDJmYjlmMDM2NWZjMzgxYzYxNjhkMTkzZTBhYWZkYWFkZGI1ZTllYTQyZmFlNTcyNmVhNzdkMmY2MTNmMDY4MDFhNDkzMzdmMTQ0MWE4NDcxNGU4NzMwNmQ5YzUwZjU=",
     "devServerPort": 4200,
     "clientPackageManager": "npm",
     "clientThemeVariant": "",
     "languages": ["en", "ro"],
-    "enableGradleEnterprise": false
+    "enableGradleEnterprise": false,
+    "entities": ["UsersPasswords"],
+    "lastLiquibaseTimestamp": 1636213487000
   }
 }

@@ -32,6 +32,16 @@ Add the `help` flag on any command to see how you can use it. For example, `npm 
 
 The `npm run` command will list all of the scripts available to run for this project.
 
+### PWA Support
+
+JHipster ships with PWA (Progressive Web App) support, and it's turned off by default. One of the main components of a PWA is a service worker.
+
+The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.module.ts`:
+
+```typescript
+ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
+```
+
 ### Managing dependencies
 
 For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
@@ -166,16 +176,16 @@ For more information, refer to the [Code quality page][].
 
 You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
 
-For example, to start a mysql database in a docker container, run:
+For example, to start a mariadb database in a docker container, run:
 
 ```
-docker-compose -f src/main/docker/mysql.yml up -d
+docker-compose -f src/main/docker/mariadb.yml up -d
 ```
 
 To stop it and remove the container, run:
 
 ```
-docker-compose -f src/main/docker/mysql.yml down
+docker-compose -f src/main/docker/mariadb.yml down
 ```
 
 You can also fully dockerize your application and all the services that it depends on.

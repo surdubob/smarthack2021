@@ -1,8 +1,8 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 version: '3.8'
 services:
-  smarthack2021-mysql:
-    image: mysql:8.0.26
+  smarthack2021-mariadb:
+    image: mariadb:10.6.4
     # volumes:
     #   - ~/volumes/jhipster/smarthack2021/mysql/:/var/lib/mysql/
     environment:
