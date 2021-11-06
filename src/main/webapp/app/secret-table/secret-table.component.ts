@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './secret-table.component.html',
   styleUrls: ['./secret-table.component.scss'],
 })
-export class SecretTableComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class SecretTableComponent {
+  constructor() {
+    // empty
+  }
 }

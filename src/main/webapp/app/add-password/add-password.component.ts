@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './add-password.component.html',
   styleUrls: ['./add-password.component.scss'],
 })
-export class AddPasswordComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AddPasswordComponent {
+  constructor() {
+    // empty
+  }
 }

@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './add-key.component.html',
   styleUrls: ['./add-key.component.scss'],
 })
-export class AddKeyComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AddKeyComponent {
+  constructor() {
+    // empty
+  }
 }
