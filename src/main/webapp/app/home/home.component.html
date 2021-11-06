@@ -3,18 +3,12 @@
     <span class="hipster img-fluid rounded"></span>
   </div>
 
-  <div class="col-md-9">
+  <div class="col-md-9" *ngIf="account == null">
     <h1 class="display-4"><span jhiTranslate="home.title">Welcome to our crypto keys storage site!</span> (Smarthack 2021)</h1>
 
     <p style="margin-top: 100px"></p>
 
     <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >You are logged in as user "{{ account.login }}".</span
-        >
-      </div>
-
       <div>
         <span jhiTranslate="home.signin" class="txt_font">Start now to manage your passwords</span>
         <button class="btn btn-primary btn_style" id="btn_signin" (click)="login()" jhiTranslate="home.btn_signin">Sign In</button>
@@ -35,8 +29,15 @@
     </div>
 
     <p style="margin-top: 100px">
-      <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>
+      <span jhiTranslate="home.like">If you like our app don't forget to give us a star on</span>
       <a href="https://github.com/surdubob/smarthack2021" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github">GitHub</a>!
     </p>
+  </div>
+  <div class="col-md-9" *ngIf="account">
+    <p class="display-4" jhiTranslate="home.title2">"Your passwords and keys are:"</p>
+    <button class="btn btn-primary btn_style" jhiTranslate="home.btn_password">"Add a password"</button>
+    <button class="btn btn-primary btn_style" jhiTranslate="home.btn_key">"Add a key"</button>
+    <p style="margin-top: 20px">Passwords:</p>
+    <p>Keys:</p>
   </div>
 </div>

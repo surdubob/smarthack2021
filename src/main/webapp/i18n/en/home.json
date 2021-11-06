@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Welcome to our crypto keys storage site!",
-    "subtitle": "This is your homepage",
+    "title2": "Your passwords and keys are: ",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
@@ -9,6 +9,8 @@
     "register": "You don't have an account yet?",
     "btn_signin": "Sign In",
     "btn_register": "Register Now",
+    "btn_password": "Add a password",
+    "btn_key": "Add a key",
     "question": "If you have any question on JHipster:",
     "link": {
       "homepage": "JHipster homepage",

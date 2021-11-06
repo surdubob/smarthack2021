@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Bun venit pe site-ul nostru de stocare a cheilor cripto!",
-    "subtitle": "Aceasta este pagina ta de start",
+    "title2": "Parolele și cheile dvs. sunt: ",
     "logged": {
       "message": "Ești autentificat cu numele de utilizator \"{{username}}\"."
     },
@@ -10,6 +10,8 @@
     "register": "Încă nu aveți un cont?",
     "btn_signin": "Conectare",
     "btn_register": "Înregistrează-te acum",
+    "btn_password": "Adăugațo o parolă",
+    "btn_keys": "Adăugați o cheie",
     "link": {
       "homepage": "Pagina JHipster",
       "stackoverflow": "JHipster pe Stack Overflow",
