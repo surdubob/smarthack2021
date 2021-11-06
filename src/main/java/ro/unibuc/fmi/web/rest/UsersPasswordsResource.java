@@ -85,29 +85,29 @@ public class UsersPasswordsResource {
      * or with status {@code 500 (Internal Server Error)} if the usersPasswords couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/users-passwords/{id}")
-    public ResponseEntity<UsersPasswords> updateUsersPasswords(
-        @PathVariable(value = "id", required = false) final UUID id,
-        @RequestBody UsersPasswords usersPasswords
-    ) throws URISyntaxException {
-        log.debug("REST request to update UsersPasswords : {}, {}", id, usersPasswords);
-        if (usersPasswords.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, usersPasswords.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!usersPasswordsRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        UsersPasswords result = usersPasswordsRepository.save(usersPasswords);
-        return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, usersPasswords.getId().toString()))
-            .body(result);
-    }
+    //    @PutMapping("/users-passwords/{id}")
+    //    public ResponseEntity<UsersPasswords> updateUsersPasswords(
+    //        @PathVariable(value = "id", required = false) final UUID id,
+    //        @RequestBody UsersPasswords usersPasswords
+    //    ) throws URISyntaxException {
+    //        log.debug("REST request to update UsersPasswords : {}, {}", id, usersPasswords);
+    //        if (usersPasswords.getId() == null) {
+    //            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    //        }
+    //        if (!Objects.equals(id, usersPasswords.getId())) {
+    //            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+    //        }
+    //
+    //        if (!usersPasswordsRepository.existsById(id)) {
+    //            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+    //        }
+    //
+    //        UsersPasswords result = usersPasswordsRepository.save(usersPasswords);
+    //        return ResponseEntity
+    //            .ok()
+    //            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, usersPasswords.getId().toString()))
+    //            .body(result);
+    //    }
 
     /**
      * {@code PATCH  /users-passwords/:id} : Partial updates given fields of an existing usersPasswords, field will ignore if it is null
@@ -120,56 +120,56 @@ public class UsersPasswordsResource {
      * or with status {@code 500 (Internal Server Error)} if the usersPasswords couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/users-passwords/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<UsersPasswords> partialUpdateUsersPasswords(
-        @PathVariable(value = "id", required = false) final UUID id,
-        @RequestBody UsersPasswords usersPasswords
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update UsersPasswords partially : {}, {}", id, usersPasswords);
-        if (usersPasswords.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, usersPasswords.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!usersPasswordsRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<UsersPasswords> result = usersPasswordsRepository
-            .findById(usersPasswords.getId())
-            .map(existingUsersPasswords -> {
-                if (usersPasswords.getSecret() != null) {
-                    existingUsersPasswords.setSecret(usersPasswords.getSecret());
-                }
-                if (usersPasswords.getType() != null) {
-                    existingUsersPasswords.setType(usersPasswords.getType());
-                }
-                if (usersPasswords.getPlatform() != null) {
-                    existingUsersPasswords.setPlatform(usersPasswords.getPlatform());
-                }
-
-                return existingUsersPasswords;
-            })
-            .map(usersPasswordsRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, usersPasswords.getId().toString())
-        );
-    }
+    //    @PatchMapping(value = "/users-passwords/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    //    public ResponseEntity<UsersPasswords> partialUpdateUsersPasswords(
+    //        @PathVariable(value = "id", required = false) final UUID id,
+    //        @RequestBody UsersPasswords usersPasswords
+    //    ) throws URISyntaxException {
+    //        log.debug("REST request to partial update UsersPasswords partially : {}, {}", id, usersPasswords);
+    //        if (usersPasswords.getId() == null) {
+    //            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    //        }
+    //        if (!Objects.equals(id, usersPasswords.getId())) {
+    //            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+    //        }
+    //
+    //        if (!usersPasswordsRepository.existsById(id)) {
+    //            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+    //        }
+    //
+    //        Optional<UsersPasswords> result = usersPasswordsRepository
+    //            .findById(usersPasswords.getId())
+    //            .map(existingUsersPasswords -> {
+    //                if (usersPasswords.getSecret() != null) {
+    //                    existingUsersPasswords.setSecret(usersPasswords.getSecret());
+    //                }
+    //                if (usersPasswords.getType() != null) {
+    //                    existingUsersPasswords.setType(usersPasswords.getType());
+    //                }
+    //                if (usersPasswords.getPlatform() != null) {
+    //                    existingUsersPasswords.setPlatform(usersPasswords.getPlatform());
+    //                }
+    //
+    //                return existingUsersPasswords;
+    //            })
+    //            .map(usersPasswordsRepository::save);
+    //
+    //        return ResponseUtil.wrapOrNotFound(
+    //            result,
+    //            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, usersPasswords.getId().toString())
+    //        );
+    //    }
 
     /**
-     * {@code GET  /users-passwords} : get all the usersPasswords.
+     * {@code GET  /users-passwords} : get all the usersPasswords for one user.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of usersPasswords in body.
      */
-    //    @GetMapping("/users-passwords")
-    //    public List<UsersPasswords> getAllUsersPasswords() {
-    //        log.debug("REST request to get all UsersPasswords");
-    //        return usersPasswordsRepository.findAll();
-    //    }
+    @GetMapping("/users-passwords")
+    public List<UsersPasswords> getAllUsersPasswords() {
+        log.debug("REST request to get all UsersPasswords");
+        return usersPasswordsRepository.findByUserIsCurrentUser();
+    }
 
     /**
      * {@code GET  /users-passwords/:id} : get the "id" usersPasswords.
