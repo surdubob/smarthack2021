@@ -17,6 +17,7 @@ import ro.unibuc.fmi.domain.User;
 import ro.unibuc.fmi.domain.UsersPasswords;
 import ro.unibuc.fmi.encryptors.EncryptionTool;
 import ro.unibuc.fmi.encryptors.SmarthackKeyGenerator;
+import ro.unibuc.fmi.encryptors.SmarthackPasswordGenerator;
 import ro.unibuc.fmi.repository.UsersPasswordsRepository;
 import ro.unibuc.fmi.service.UserService;
 import ro.unibuc.fmi.web.rest.errors.BadRequestAlertException;
@@ -188,7 +189,15 @@ public class UsersPasswordsResource {
         }
         final User user = isUser.get();
         if (usersPasswordsRepository.passwordBelongsToUser(user.getId(), id) == 1) {
-            return ResponseUtil.wrapOrNotFound(usersPasswords);
+            try {
+                if (usersPasswords.isPresent()) {
+                    EncryptionTool enc = new EncryptionTool();
+                    usersPasswords.get().secret(enc.decrypt(usersPasswords.get().getSecret()));
+                }
+                return ResponseUtil.wrapOrNotFound(usersPasswords);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return new ResponseEntity<UsersPasswords>(HttpStatus.FORBIDDEN);
@@ -226,32 +235,32 @@ public class UsersPasswordsResource {
         String response = "";
         SmarthackKeyGenerator shkg = new SmarthackKeyGenerator();
         switch (type) {
-            case "AES 128":
+            case "AES_128":
                 {
                     response = shkg.generate_aes(128);
                     break;
                 }
-            case "AES 192":
+            case "AES_192":
                 {
                     response = shkg.generate_aes(192);
                     break;
                 }
-            case "AES 256":
+            case "AES_256":
                 {
                     response = shkg.generate_aes(256);
                     break;
                 }
-            case "Triple DES":
+            case "Triple_DES":
                 {
                     response = shkg.generate_3des();
                     break;
                 }
-            case "RSA 1024":
+            case "RSA_1024":
                 {
                     response = shkg.generate_rsa(1024);
                     break;
                 }
-            case "RSA 2048":
+            case "RSA_2048":
                 {
                     response = shkg.generate_rsa(2048);
                     break;
@@ -263,5 +272,12 @@ public class UsersPasswordsResource {
                 }
         }
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/users-passwords/generate-password")
+    public ResponseEntity<String> generatePassword(@RequestParam Integer length, @RequestParam Boolean specialChars) {
+        SmarthackPasswordGenerator spg = new SmarthackPasswordGenerator();
+
+        return ResponseEntity.ok(spg.generatePassword(length, specialChars));
     }
 }

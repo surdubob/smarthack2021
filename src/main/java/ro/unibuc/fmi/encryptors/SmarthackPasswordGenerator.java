@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class SmarthackPasswordGenerator {
 
-    public StringBuilder generatePassword(int length, boolean specialCh) {
+    public String generatePassword(int length, boolean specialCh) {
         String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
         String specialCharacters = "!@#$%&*";
@@ -22,6 +22,6 @@ public class SmarthackPasswordGenerator {
         for (int i = 0; i < length; i++) {
             password.append(combinedChars.charAt(random.nextInt(combinedChars.length())));
         }
-        return password;
+        return password.toString();
     }
 }

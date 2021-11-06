@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ApplicationConfigService } from './core/config/application-config.service';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AddPasswordService {
+  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
+
+  generatePassword(length: number, specialChars: boolean): Observable<string> {
+    const url = this.applicationConfigService.getEndpointFor('api/users-passwords');
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.http.get(
+      url
+        .concat('/generate-password?length=')
+        .concat(length.toString())
+        .concat('&specialChars=')
+        .concat(specialChars ? 'true' : 'false'),
+      { headers, responseType: 'text' as const }
+    );
+  }
+}

@@ -3,6 +3,7 @@ import { UsersPasswordsService } from '../entities/users-passwords/service/users
 import { UsersPasswords } from '../entities/users-passwords/users-passwords.model';
 import { AccountService } from '../core/auth/account.service';
 import { HttpClient } from '@angular/common/http';
+import { AddKeyService } from '../add-key.service';
 
 @Component({
   selector: 'jhi-add-key',
@@ -13,7 +14,11 @@ export class AddKeyComponent {
   keyValue = '';
   inputGroup = '';
   platform = '';
-  constructor(private userPasswordsService: UsersPasswordsService, private accountService: AccountService, private http: HttpClient) {
+  constructor(
+    private userPasswordsService: UsersPasswordsService,
+    private accountService: AccountService,
+    private addKeyService: AddKeyService
+  ) {
     // empty
   }
 
@@ -31,7 +36,11 @@ export class AddKeyComponent {
     });
   }
 
-  /*generate_key(): void {
-
-  }*/
+  generate_key(): void {
+    this.addKeyService.generateKey(this.inputGroup).subscribe(r => {
+      // eslint-disable-next-line no-console
+      console.log(r);
+      this.keyValue = r;
+    });
+  }
 }

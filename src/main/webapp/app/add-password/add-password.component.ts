@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersPasswords } from '../entities/users-passwords/users-passwords.model';
 import { AccountService } from '../core/auth/account.service';
 import { UsersPasswordsService } from '../entities/users-passwords/service/users-passwords.service';
+import { AddPasswordService } from '../add-password.service';
 
 @Component({
   selector: 'jhi-add-password',
@@ -12,10 +13,14 @@ export class AddPasswordComponent {
   generateHidden = false;
   platform = '';
   password = '';
-  length = '';
+  length = 16;
   specialCh = false;
 
-  constructor(private userPasswordsService: UsersPasswordsService, private accountService: AccountService) {
+  constructor(
+    private userPasswordsService: UsersPasswordsService,
+    private accountService: AccountService,
+    private addPasswordService: AddPasswordService
+  ) {
     // empty
   }
 
@@ -23,12 +28,13 @@ export class AddPasswordComponent {
     this.generateHidden = !this.generateHidden;
   }
 
-  //  generate_password(){
-  //    const password = new UsersPasswords();
-  //    if(this.generateHidden){
-  //
-  //    }
-  // }
+  generate_password(): void {
+    this.addPasswordService.generatePassword(this.length, this.specialCh).subscribe(r => {
+      // eslint-disable-next-line no-console
+      console.log(r);
+      this.password = r;
+    });
+  }
 
   save_password(): void {
     const password = new UsersPasswords();
