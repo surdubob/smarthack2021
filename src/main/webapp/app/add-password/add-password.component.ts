@@ -3,6 +3,7 @@ import { UsersPasswords } from '../entities/users-passwords/users-passwords.mode
 import { AccountService } from '../core/auth/account.service';
 import { UsersPasswordsService } from '../entities/users-passwords/service/users-passwords.service';
 import { AddPasswordService } from '../add-password.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-add-password',
@@ -19,7 +20,8 @@ export class AddPasswordComponent {
   constructor(
     private userPasswordsService: UsersPasswordsService,
     private accountService: AccountService,
-    private addPasswordService: AddPasswordService
+    private addPasswordService: AddPasswordService,
+    private routerService: Router
   ) {
     // empty
   }
@@ -37,16 +39,21 @@ export class AddPasswordComponent {
   }
 
   save_password(): void {
-    const password = new UsersPasswords();
-    this.accountService.getAuthenticationState().subscribe(account => {
-      if (account) {
-        password.user = account;
-        password.type = 'Password';
-        password.platform = this.platform;
-        password.secret = this.password;
-        // eslint-disable-next-line no-console
-        this.userPasswordsService.create(password).subscribe(response => console.log(response));
-      }
-    });
+    if (this.password === '' || this.platform === '') {
+      alert('Please fill all the data required');
+    } else {
+      const password = new UsersPasswords();
+      this.accountService.getAuthenticationState().subscribe(account => {
+        if (account) {
+          password.user = account;
+          password.type = 'Password';
+          password.platform = this.platform;
+          password.secret = this.password;
+          // eslint-disable-next-line no-console
+          this.userPasswordsService.create(password).subscribe(response => console.log(response));
+          this.routerService.navigate(['/']);
+        }
+      });
+    }
   }
 }
