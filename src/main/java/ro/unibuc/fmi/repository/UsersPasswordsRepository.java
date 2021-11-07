@@ -20,4 +20,7 @@ public interface UsersPasswordsRepository extends JpaRepository<UsersPasswords, 
         "select count(usersPasswords.id) from UsersPasswords usersPasswords where usersPasswords.user.id=?#{#userId} and usersPasswords.id=?#{#passwordId}"
     )
     long passwordBelongsToUser(@Param("userId") long userId, @Param("passwordId") UUID passwordId);
+
+    @Query("select usersPasswords from UsersPasswords usersPasswords where usersPasswords.user.id=?#{#userId}")
+    List<UsersPasswords> findPasswordsForCurrentUser(@Param("userId") Long userId);
 }

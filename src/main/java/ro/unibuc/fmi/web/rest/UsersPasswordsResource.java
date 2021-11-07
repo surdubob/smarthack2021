@@ -2,10 +2,7 @@ package ro.unibuc.fmi.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +60,7 @@ public class UsersPasswordsResource {
         }
         try {
             EncryptionTool enc = new EncryptionTool();
-            usersPasswords.secret(enc.encrypt(usersPasswords.getSecret()));
+            usersPasswords.setSecret(enc.encrypt(usersPasswords.getSecret()));
             UsersPasswords result = usersPasswordsRepository.save(usersPasswords);
             return ResponseEntity
                 .created(new URI("/api/users-passwords/" + result.getId()))
@@ -168,15 +165,29 @@ public class UsersPasswordsResource {
     @GetMapping("/users-passwords")
     public List<UsersPasswords> getAllUsersPasswords() {
         log.debug("REST request to get all UsersPasswords");
-        EncryptionTool enc = null;
         try {
-            enc = new EncryptionTool();
-            EncryptionTool finalEnc = enc;
-            List<UsersPasswords> up = usersPasswordsRepository.findByUserIsCurrentUser();
-            for (UsersPasswords usersPassword : up) {
-                usersPassword.secret(finalEnc.decrypt(usersPassword.getSecret()));
+            EncryptionTool enc = new EncryptionTool();
+
+            final Optional<User> isUser = userService.getUserWithAuthorities();
+            if (isUser.isEmpty()) {
+                log.error("User is not logged in");
+                return null;
             }
-            return up;
+            final User user = isUser.get();
+
+            List<UsersPasswords> up = usersPasswordsRepository.findPasswordsForCurrentUser(user.getId());
+
+            List<UsersPasswords> result = new ArrayList<>();
+            for (UsersPasswords usersPassword : up) {
+                UsersPasswords usp = new UsersPasswords();
+                usp.setId(usersPassword.getId());
+                usp.setSecret(enc.decrypt(usersPassword.getSecret()));
+                usp.setPlatform(usersPassword.getPlatform());
+                usp.setType(usersPassword.getType());
+                usp.setUser(user);
+                result.add(usp);
+            }
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -204,7 +215,7 @@ public class UsersPasswordsResource {
             try {
                 if (usersPasswords.isPresent()) {
                     EncryptionTool enc = new EncryptionTool();
-                    usersPasswords.get().secret(enc.decrypt(usersPasswords.get().getSecret()));
+                    usersPasswords.get().setSecret(enc.decrypt(usersPasswords.get().getSecret()));
                 }
                 return ResponseUtil.wrapOrNotFound(usersPasswords);
             } catch (Exception e) {
