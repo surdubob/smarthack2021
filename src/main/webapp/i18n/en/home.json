@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Welcome to our crypto keys storage site!",
-    "title2": "Your passwords and keys are: ",
+    "title2": "Hello, {{username}}! Your passwords and keys are: ",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },

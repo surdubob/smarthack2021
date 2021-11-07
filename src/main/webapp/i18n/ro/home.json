@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Bun venit pe site-ul nostru de stocare a cheilor cripto!",
-    "title2": "Parolele și cheile dvs. sunt: ",
+    "title2": "Salut, {{username}}! Parolele și cheile dvs. sunt: ",
     "logged": {
       "message": "Ești autentificat cu numele de utilizator \"{{username}}\"."
     },

@@ -34,7 +34,9 @@
     </p>
   </div>
   <div class="col-md-9" *ngIf="account">
-    <p class="display-4" jhiTranslate="home.title2">"Your passwords and keys are:"</p>
+    <p class="display-4" jhiTranslate="home.title2" [translateValues]="{ username: account.login }">
+      "Hello, {{ account.login }}! Your passwords and keys are:"
+    </p>
     <div class="form-inline" style="width: 100%">
       <button class="btn btn-primary btn_style" jhiTranslate="home.btn_password" routerLink="/add-password">"Add a password"</button>
       <button class="btn btn-primary btn_style m-3" jhiTranslate="home.btn_key" routerLink="/add-key">"Add a key"</button>
