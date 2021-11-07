@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersPasswords } from '../entities/users-passwords/users-passwords.model';
 import { AccountService } from '../core/auth/account.service';
 import { UsersPasswordsService } from '../entities/users-passwords/service/users-passwords.service';
 import { AddPasswordService } from '../add-password.service';
 import { Router } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
+import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-add-password',
@@ -16,6 +19,7 @@ export class AddPasswordComponent {
   password = '';
   length = 16;
   specialCh = false;
+  subs: Subscription | undefined;
 
   constructor(
     private userPasswordsService: UsersPasswordsService,
@@ -43,17 +47,24 @@ export class AddPasswordComponent {
       alert('Please fill all the data required');
     } else {
       const password = new UsersPasswords();
-      this.accountService.getAuthenticationState().subscribe(account => {
-        if (account) {
-          password.user = account;
-          password.type = 'Password';
-          password.platform = this.platform;
-          password.secret = this.password;
-          // eslint-disable-next-line no-console
-          this.userPasswordsService.create(password).subscribe(response => console.log(response));
-          this.routerService.navigate(['/']);
-        }
-      });
+      const passwd = new UsersPasswords();
+      passwd.user = this.accountService.getCurrentUser();
+      if (passwd.user != null) {
+        // eslint-disable-next-line no-console
+        console.log(passwd.user);
+        passwd.type = 'Password';
+        passwd.platform = this.platform;
+        passwd.secret = this.password;
+        // eslint-disable-next-line no-console
+        this.userPasswordsService
+          .create(passwd)
+          .pipe(first())
+          .subscribe(response => {
+            // eslint-disable-next-line no-console
+            console.log(response);
+          });
+        this.routerService.navigate(['/']);
+      }
     }
   }
 }

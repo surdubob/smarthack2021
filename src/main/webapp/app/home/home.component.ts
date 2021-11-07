@@ -18,7 +18,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   isLoading = false;
+  searchString = '';
   passwordList: UsersPasswords[] = [];
+  filteredList: UsersPasswords[] = [];
   account: Account | null = null;
   private readonly destroy$ = new Subject<void>();
 
@@ -27,7 +29,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private usersPasswordsService: HomeService,
     protected modalService: NgbModal
-  ) {}
+  ) {
+    router.events.subscribe(val => {
+      // this.loadAll();
+    });
+  }
 
   ngOnInit(): void {
     this.accountService
@@ -39,6 +45,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  changeSearch(): void {
+    this.filteredList = this.passwordList.filter(value => {
+      if (value.platform?.includes(this.searchString)) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   login(): void {
     this.router.navigate(['/login']);
   }
@@ -48,10 +63,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  loadAll(): void {
+  public loadAll(): void {
     this.isLoading = true;
     this.usersPasswordsService.getAllPasswords().subscribe(r => {
       this.passwordList = r;
+      this.filteredList = r;
     });
   }
 

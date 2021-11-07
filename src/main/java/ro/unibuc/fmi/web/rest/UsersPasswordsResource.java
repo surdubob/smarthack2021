@@ -60,8 +60,15 @@ public class UsersPasswordsResource {
         }
         try {
             EncryptionTool enc = new EncryptionTool();
-            usersPasswords.setSecret(enc.encrypt(usersPasswords.getSecret()));
-            UsersPasswords result = usersPasswordsRepository.save(usersPasswords);
+            UsersPasswords usp = new UsersPasswords();
+            usp.setId(usersPasswords.getId());
+            usp.setSecret(enc.encrypt(usersPasswords.getSecret()));
+            usp.setPlatform(usersPasswords.getPlatform());
+            usp.setType(usersPasswords.getType());
+            usp.setUser(usersPasswords.getUser());
+
+            UsersPasswords result = usersPasswordsRepository.save(usp);
+
             return ResponseEntity
                 .created(new URI("/api/users-passwords/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -215,9 +222,14 @@ public class UsersPasswordsResource {
             try {
                 if (usersPasswords.isPresent()) {
                     EncryptionTool enc = new EncryptionTool();
-                    usersPasswords.get().setSecret(enc.decrypt(usersPasswords.get().getSecret()));
+                    UsersPasswords usp = new UsersPasswords();
+                    usp.setId(usersPasswords.get().getId());
+                    usp.setSecret(enc.decrypt(usersPasswords.get().getSecret()));
+                    usp.setPlatform(usersPasswords.get().getPlatform());
+                    usp.setType(usersPasswords.get().getType());
+                    usp.setUser(user);
+                    return ResponseEntity.ok(usp);
                 }
-                return ResponseUtil.wrapOrNotFound(usersPasswords);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -44,7 +44,9 @@
         class="search form-control ml-auto"
         style="margin-right: 0"
         jhiTranslate="home.search"
-        placeholder="Search?"
+        placeholder="Search"
+        [(ngModel)]="searchString"
+        (ngModelChange)="changeSearch()"
       />
     </div>
 
@@ -59,7 +61,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let usersPasswords of passwordList">
+          <tr *ngFor="let usersPasswords of filteredList">
             <td>{{ usersPasswords.secret }}</td>
             <td>{{ usersPasswords.type }}</td>
             <td>{{ usersPasswords.platform }}</td>

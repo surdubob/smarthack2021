@@ -76,6 +76,10 @@ export class AccountService {
     return this.authenticationState.asObservable();
   }
 
+  getCurrentUser(): Account | null {
+    return this.userIdentity;
+  }
+
   private fetch(): Observable<Account> {
     return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account'));
   }
