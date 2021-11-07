@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   passwordList: UsersPasswords[] = [];
   filteredList: UsersPasswords[] = [];
   account: Account | null = null;
+  shownId: string | undefined = '';
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -29,11 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private usersPasswordsService: HomeService,
     protected modalService: NgbModal
-  ) {
-    router.events.subscribe(val => {
-      // this.loadAll();
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.accountService
@@ -80,5 +78,21 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.loadAll();
       }
     });
+  }
+
+  copyMessage(val: string | null | undefined): void {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    if (val !== null && val !== undefined) {
+      selBox.value = val;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+    }
   }
 }

@@ -4,7 +4,6 @@ import { AccountService } from '../core/auth/account.service';
 import { UsersPasswordsService } from '../entities/users-passwords/service/users-passwords.service';
 import { AddPasswordService } from '../add-password.service';
 import { Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 

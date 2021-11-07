@@ -33,9 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mariadb://localhost:3306/smarthack2021?useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password:
+    url: jdbc:mariadb://cnic.asuscomm.com:6033/smarthack2021?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: alex
+    password: alex2000
     hikari:
       poolName: Hikari
       auto-commit: false

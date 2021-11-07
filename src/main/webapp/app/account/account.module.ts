@@ -22,5 +22,6 @@ import { accountState } from './account.route';
     PasswordResetFinishComponent,
     SettingsComponent,
   ],
+  exports: [PasswordStrengthBarComponent],
 })
 export class AccountModule {}

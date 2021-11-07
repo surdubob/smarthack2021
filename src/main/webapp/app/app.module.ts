@@ -31,6 +31,8 @@ import { SecretTableComponent } from './secret-table/secret-table.component';
 import { AddPasswordComponent } from './add-password/add-password.component';
 import { AddKeyComponent } from './add-key/add-key.component';
 import { FormsModule } from '@angular/forms';
+import { PasswordStrengthBarComponent } from './account/password/password-strength-bar/password-strength-bar.component';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   imports: [
@@ -56,6 +58,7 @@ import { FormsModule } from '@angular/forms';
         useFactory: missingTranslationHandler,
       },
     }),
+    AccountModule,
   ],
   providers: [
     Title,
